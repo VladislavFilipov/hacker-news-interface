@@ -1,4 +1,5 @@
 import { FC, useMemo, useState } from "react";
+import { RouterProvider } from "react-router-dom";
 
 import {
   Container,
@@ -8,20 +9,17 @@ import {
   ThemeProvider
 } from "@mui/material";
 
+import { TRouter } from "@src/components/pages/router";
 import { getTheme, getThemeMode } from "@src/styles/mui/theme";
 
-const App: FC = () => {
+const App: FC<{ router: TRouter }> = ({ router }) => {
   const [mode] = useState<PaletteMode>(getThemeMode());
   const theme = useMemo<Theme>(() => getTheme(mode), [mode]);
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Container maxWidth="lg">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque fugit
-        nihil rem obcaecati eligendi doloribus numquam quas ducimus. Quam,
-        nostrum!
-      </Container>
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 };
