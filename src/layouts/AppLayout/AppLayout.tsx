@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import { Box, Container } from "@mui/material";
 
-import Navbar from "@src/components/layouts/Navbar/Navbar";
+import Navbar from "@src/layouts/Navbar/Navbar";
 
 const AppLayout = () => {
   return (

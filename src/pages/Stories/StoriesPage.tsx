@@ -2,8 +2,10 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
-import Link from "@src/components/shared/Link/Link";
+import Link from "@src/components/Link/Link";
 import useStoriesList from "@src/queries/useStories";
+
+import S from "./StoriesPage.styles";
 
 const StoriesPage = () => {
   const { stories, error, isLoading, isFetchingNextPage, observerRef } =
@@ -18,11 +20,11 @@ const StoriesPage = () => {
         <>
           {page.map(story => (
             <Link key={story.id} to={`/${story.id}`} underline="none">
-              <Paper>
-                <Typography variant="h5">
+              <S.Wrap variant="elevation" elevation={10}>
+                <S.Title variant="h6">
                   Story {story.id}: {story.title}
-                </Typography>
-              </Paper>
+                </S.Title>
+              </S.Wrap>
             </Link>
           ))}
         </>

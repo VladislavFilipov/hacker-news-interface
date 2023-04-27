@@ -4,7 +4,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import Comment from "@src/components/pages/Story/Comment";
+import Comment from "@src/pages/Story/Comment";
 import useStoryData from "@src/queries/useStoryData";
 
 const StoryPage = () => {

@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
-import Link from "@src/components/shared/Link/Link";
+import Link from "@src/components/Link/Link";
 
 const Navbar = () => {
   return (
