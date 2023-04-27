@@ -14,8 +14,8 @@ const StoryPageSkeleton: FC = () => {
       <S.Skeleton.CommentsTitle variant="rounded" />
       {Array(5)
         .fill(true)
-        .map(() => (
-          <S.Skeleton.Comment variant="rounded" />
+        .map((_, index) => (
+          <S.Skeleton.Comment key={index} variant="rounded" />
         ))}
     </Box>
   );

@@ -10,8 +10,8 @@ const StoriesListSkeleton: FC = () => {
     <Box>
       {Array(10)
         .fill(true)
-        .map(() => (
-          <StoryCard.Skeleton variant="rounded" />
+        .map((_, index) => (
+          <StoryCard.Skeleton key={index} variant="rounded" />
         ))}
     </Box>
   );
