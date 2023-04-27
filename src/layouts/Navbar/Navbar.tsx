@@ -1,5 +1,3 @@
-import { NavLink } from "react-router-dom";
-
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
@@ -13,7 +11,7 @@ const Navbar = () => {
           <Link to="/">News</Link>
         </Toolbar>
       </AppBar>
-      <Toolbar />
+      <Toolbar variant="dense" />
     </>
   );
 };

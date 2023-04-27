@@ -35,7 +35,7 @@ const useStoryData = (storyId: number) => {
     hasNextPage,
     refetch: refetchComments
   } = useInfiniteQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", storyId],
     queryFn: async ({ pageParam = 1 }) => await getNextComments(pageParam),
     enabled: !!(story && story.kids && story.kids.length > 0),
     getNextPageParam: (lastPage, allPages) =>

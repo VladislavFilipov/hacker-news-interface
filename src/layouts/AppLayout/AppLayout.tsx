@@ -5,15 +5,17 @@ import { Box, Container } from "@mui/material";
 
 import Navbar from "@src/layouts/Navbar/Navbar";
 
+import * as S from "./AppLayout.styles";
+
 const AppLayout = () => {
   return (
     <Box>
       <Navbar />
-      <Container maxWidth="lg">
+      <S.Container maxWidth="md">
         <Suspense fallback={<>Loading...</>}>
           <Outlet />
         </Suspense>
-      </Container>
+      </S.Container>
     </Box>
   );
 };
