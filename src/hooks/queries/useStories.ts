@@ -9,11 +9,14 @@ const useStoriesList = () => {
   const {
     data: storyIds,
     error: idsError,
-    isLoading: idsIsLoading
+    isLoading: idsIsLoading,
+    isFetching: storyIdsIsFetching,
+    refetch: refetchStoryIds
   } = useQuery({
     queryKey: ["storyIds"],
     queryFn: async () => await Api.getNewStoryIds(100),
     refetchInterval: 60000,
+    refetchOnMount: false,
     onSuccess: () => {
       if (stories) refetchStories();
     }
@@ -33,16 +36,18 @@ const useStoriesList = () => {
   const {
     data: stories,
     error,
+    isLoading: storiesIsLoading,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
     refetch: refetchStories
   } = useInfiniteQuery({
-    queryKey: ["stories"],
+    queryKey: ["stories", storyIds],
     queryFn: async ({ pageParam = 1 }) => await getNextStories(pageParam),
     enabled: !!storyIds,
     getNextPageParam: (lastPage, allPages) =>
-      lastPage.length === LIMIT ? allPages.length + 1 : undefined
+      lastPage.length === LIMIT ? allPages.length + 1 : undefined,
+    refetchOnMount: false
   });
 
   const observerRef = useIntersectionObserver(
@@ -51,11 +56,15 @@ const useStoriesList = () => {
   );
 
   return {
+    storyIds,
     stories,
     error: idsError || error,
-    isLoading: idsIsLoading,
+    isLoading: idsIsLoading || storiesIsLoading,
     isFetchingNextPage,
-    observerRef
+    hasNextPage,
+    observerRef,
+    refetchStoryIds,
+    storyIdsIsFetching
   };
 };
 

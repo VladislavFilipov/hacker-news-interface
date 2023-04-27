@@ -4,8 +4,11 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import useNestedComments from "@src/queries/useNestedComments";
+import useNestedComments from "@src/hooks/queries/useNestedComments";
 import { TComment } from "@src/types/comment.types";
+import { formatUnixDateWithTime } from "@src/utils/functions/format/date";
+
+import S from "./Comment.styles";
 
 const Comment: FC<{ comment: TComment }> = ({ comment }) => {
   const { error, isFetching, enableLoad } = useNestedComments(comment);
@@ -13,11 +16,17 @@ const Comment: FC<{ comment: TComment }> = ({ comment }) => {
   const [showNested, setShowNested] = useState<boolean>(!!comment.childs);
 
   return (
-    <Box sx={{ mt: 2, pl: 1, borderLeft: "1px solid white" }}>
-      <Typography variant="h6">
-        {comment.id} by {comment.by}
-      </Typography>
-      <Typography>{comment.text}</Typography>
+    <S.Body>
+      <S.Header>
+        <S.Author variant="subtitle1">{comment.by}</S.Author>
+        <S.Time variant="body2">
+          {formatUnixDateWithTime(comment.time * 1000)}
+        </S.Time>
+      </S.Header>
+
+      <Typography dangerouslySetInnerHTML={{ __html: comment.text }} />
+      {/* {comment.text}
+      </Typography> */}
       {comment.kids && (
         <>
           {isFetching ? (
@@ -29,7 +38,7 @@ const Comment: FC<{ comment: TComment }> = ({ comment }) => {
                 setShowNested(prev => !prev);
               }}
             >
-              {showNested ? "Hide" : "Show"} answers
+              {showNested ? "Hide" : `Show ${comment.kids.length}`} answers
             </Button>
           )}
           {error && <Typography>error...</Typography>}
@@ -43,7 +52,7 @@ const Comment: FC<{ comment: TComment }> = ({ comment }) => {
           )}
         </>
       )}
-    </Box>
+    </S.Body>
   );
 };
 

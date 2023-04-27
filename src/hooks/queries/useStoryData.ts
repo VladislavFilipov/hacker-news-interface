@@ -30,12 +30,13 @@ const useStoryData = (storyId: number) => {
   const {
     data: comments,
     error: commentsError,
+    isFetching: commentsIsFetching,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
     refetch: refetchComments
   } = useInfiniteQuery({
-    queryKey: ["comments"],
+    queryKey: ["comments", storyId],
     queryFn: async ({ pageParam = 1 }) => await getNextComments(pageParam),
     enabled: !!(story && story.kids && story.kids.length > 0),
     getNextPageParam: (lastPage, allPages) =>
@@ -52,9 +53,11 @@ const useStoryData = (storyId: number) => {
     comments,
     refetchComments,
     error: storyError || commentsError,
+    commentsIsFetching,
     isLoading,
     isFetchingNextPage,
-    observerRef
+    observerRef,
+    hasNextPage
   };
 };
 

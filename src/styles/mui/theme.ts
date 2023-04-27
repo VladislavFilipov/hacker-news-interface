@@ -3,11 +3,12 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { createTheme, PaletteMode, ThemeOptions } from "@mui/material";
+import { deepOrange } from "@mui/material/colors";
 
 const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
   palette: {
-    mode
-
+    mode,
+    primary: deepOrange
     // ...(mode === "light"
     //   ? {
     //       // palette values for light mode
@@ -26,9 +27,9 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
   components: {
     MuiButton: {
       styleOverrides: {
-        // contained: {
-        //   color: "white"
-        // }
+        contained: {
+          color: "white"
+        }
       }
     }
   }
