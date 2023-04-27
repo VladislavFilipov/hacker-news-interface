@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Link from "@src/components/shared/Link/Link";
 import useStoriesList from "@src/queries/useStories";
 
-const NewsPage = () => {
+const StoriesPage = () => {
   const { stories, error, isLoading, isFetchingNextPage, observerRef } =
     useStoriesList();
 
@@ -22,11 +22,6 @@ const NewsPage = () => {
                 <Typography variant="h5">
                   Story {story.id}: {story.title}
                 </Typography>
-                {/* <Typography variant="body1">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum,
-            error? Neque, laboriosam. Sed adipisci repellendus, dicta impedit
-            consequuntur molestias necessitatibus.
-          </Typography> */}
               </Paper>
             </Link>
           ))}
@@ -39,4 +34,4 @@ const NewsPage = () => {
   );
 };
 
-export default NewsPage;
+export default StoriesPage;

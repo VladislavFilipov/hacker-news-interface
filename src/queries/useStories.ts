@@ -1,26 +1,33 @@
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 
-import storiesApi from "@src/api/stories.api";
+import Api from "@src/api";
 import useIntersectionObserver from "@src/hooks/useIntersectionObserver";
+import { TStory } from "@src/types/story.types";
 
 const LIMIT = 10;
 const useStoriesList = () => {
   const {
-    data: idsList,
+    data: storyIds,
     error: idsError,
     isLoading: idsIsLoading
   } = useQuery({
-    queryKey: ["idsList"],
-    queryFn: async () => await storiesApi.getIdsList(100)
+    queryKey: ["storyIds"],
+    queryFn: async () => await Api.getNewStoryIds(100),
+    refetchInterval: 60000,
+    onSuccess: () => {
+      if (stories) refetchStories();
+    }
   });
 
   const getNextStories = async (pageParam: number) => {
-    if (!idsList) throw new Error("Error");
+    if (!storyIds) throw new Error("Error");
 
     const to = pageParam * LIMIT;
-    const curIdsList = idsList.slice(to - LIMIT, to);
+    const curStoryIds = storyIds.slice(to - LIMIT, to);
 
-    return await Promise.all(curIdsList.map(storiesApi.getById));
+    return await Promise.all(
+      curStoryIds.map(storyId => Api.getItemById<TStory>(storyId))
+    );
   };
 
   const {
@@ -28,11 +35,12 @@ const useStoriesList = () => {
     error,
     isFetchingNextPage,
     fetchNextPage,
-    hasNextPage
+    hasNextPage,
+    refetch: refetchStories
   } = useInfiniteQuery({
     queryKey: ["stories"],
     queryFn: async ({ pageParam = 1 }) => await getNextStories(pageParam),
-    enabled: !!idsList,
+    enabled: !!storyIds,
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length === LIMIT ? allPages.length + 1 : undefined
   });

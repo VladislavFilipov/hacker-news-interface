@@ -1,7 +1,9 @@
 import { useQuery, useInfiniteQuery } from "@tanstack/react-query";
 
-import storiesApi from "@src/api/stories.api";
+import Api from "@src/api";
 import useIntersectionObserver from "@src/hooks/useIntersectionObserver";
+import { TComment } from "@src/types/comment.types";
+import { TStory } from "@src/types/story.types";
 
 const LIMIT = 10;
 const useStoryData = (storyId: number) => {
@@ -11,31 +13,27 @@ const useStoryData = (storyId: number) => {
     isLoading
   } = useQuery({
     queryKey: ["story", storyId],
-    queryFn: async () => await storiesApi.getById(storyId)
+    queryFn: async () => await Api.getItemById<TStory>(storyId)
   });
-  console.log("story", story);
-  const getNextComments = async (pageParam: number) => {
-    console.log("getNextComments story", story);
 
+  const getNextComments = async (pageParam: number) => {
     if (!story?.kids) throw new Error("Error");
 
     const to = pageParam * LIMIT;
     const curKidsIdsList = story?.kids.slice(to - LIMIT, to);
 
-    return await Promise.all(curKidsIdsList.map(storiesApi.getCommentById));
+    return await Promise.all(
+      curKidsIdsList.map(id => Api.getItemById<TComment>(id))
+    );
   };
-
-  console.log(
-    "story && story.kids && story.kids.length > 0",
-    !!story && !!story.kids && story.kids.length > 0
-  );
 
   const {
     data: comments,
     error: commentsError,
     isFetchingNextPage,
     fetchNextPage,
-    hasNextPage
+    hasNextPage,
+    refetch: refetchComments
   } = useInfiniteQuery({
     queryKey: ["comments"],
     queryFn: async ({ pageParam = 1 }) => await getNextComments(pageParam),
@@ -52,6 +50,7 @@ const useStoryData = (storyId: number) => {
   return {
     story,
     comments,
+    refetchComments,
     error: storyError || commentsError,
     isLoading,
     isFetchingNextPage,

@@ -6,9 +6,11 @@ import AppLayout from "@src/components/layouts/App/AppLayout";
 // import NewsPage from "@src/components/pages/News/NewsPage";
 // import NewsItemPage from "@src/components/pages/NewsItem/NewsItemPage";
 
-const NewsPage = lazy(() => import("@src/components/pages/News/NewsPage"));
+const NewsPage = lazy(
+  () => import("@src/components/pages/Stories/StoriesPage")
+);
 const NewsItemPage = lazy(
-  () => import("@src/components/pages/NewsItem/NewsItemPage")
+  () => import("@src/components/pages/Story/StoryPage")
 );
 const NotFoundPage = lazy(
   () => import("@src/components/pages/NotFound/NotFoundPage")
