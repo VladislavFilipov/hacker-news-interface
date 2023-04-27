@@ -14,7 +14,7 @@ import S from "./StoryCard.styles";
 
 const StoryCard: FC<{ story: TStory }> = ({ story }) => {
   return (
-    <S.Wrap variant="elevation" elevation={10}>
+    <S.Wrap variant="elevation" elevation={5}>
       <S.Title variant="h6">{story.title}</S.Title>
       <S.Info>
         <LabelWithIcon
@@ -23,7 +23,7 @@ const StoryCard: FC<{ story: TStory }> = ({ story }) => {
         />
         <S.InfoNested>
           <LabelWithIcon
-            text={story.kids?.length || 0}
+            text={story.descendants}
             icon={<ChatIcon color="disabled" />}
           />
           <LabelWithIcon

@@ -4,7 +4,9 @@ import {
   Typography,
   TypographyProps,
   Box,
-  BoxProps
+  BoxProps,
+  Skeleton as MuiSkeleton,
+  SkeletonProps
 } from "@mui/material";
 import { styled, css } from "@mui/system";
 
@@ -27,23 +29,6 @@ const Title = styled(Typography)<TypographyProps>(
     margin-bottom: ${theme.spacing(1)};
   `
 );
-
-// const Info = styled(Box)<BoxProps>(
-//   ({ theme }) => css`
-//     display: flex;
-//     justify-content: space-between;
-//     flex-wrap: wrap;
-//     gap: ${theme.spacing(3)};
-
-//     @media screen and (max-width: 600px) {
-//       display: block;
-//     }
-//     /* & > .MuiBox-root:nth-child(2) {
-//       flex-grow: 1;
-//       justify-content: flex-end;
-//     } */
-//   `
-// );
 
 const Info = styled(Box)<BoxProps>(
   ({ theme }) => css`
@@ -71,17 +56,11 @@ const InfoNested = styled(Info)<BoxProps>(
   `
 );
 
-// const InfoItem = styled(Box)<BoxProps>(
-//   ({ theme }) => css`
-//     display: flex;
-//     gap: ${theme.spacing(0.5)};
-//     align-items: center;
+const Skeleton = styled(MuiSkeleton)<SkeletonProps>(
+  ({ theme }) => css`
+    height: ${theme.spacing(10)};
+    margin-bottom: ${theme.spacing(2)};
+  `
+);
 
-//     & .MuiSvgIcon-root {
-//       font-size: medium;
-//       color: ${theme.palette.primary.main};
-//     }
-//   `
-// );
-
-export default { Wrap, Title, Info, InfoNested };
+export default { Wrap, Title, Info, InfoNested, Skeleton };

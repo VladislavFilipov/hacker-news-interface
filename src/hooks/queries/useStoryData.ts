@@ -30,6 +30,7 @@ const useStoryData = (storyId: number) => {
   const {
     data: comments,
     error: commentsError,
+    isFetching: commentsIsFetching,
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
@@ -52,9 +53,11 @@ const useStoryData = (storyId: number) => {
     comments,
     refetchComments,
     error: storyError || commentsError,
+    commentsIsFetching,
     isLoading,
     isFetchingNextPage,
-    observerRef
+    observerRef,
+    hasNextPage
   };
 };
 

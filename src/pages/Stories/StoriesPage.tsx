@@ -7,8 +7,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
 import Link from "@src/components/Link/Link";
+import RefreshButton from "@src/components/RefreshButton/RefreshButton";
+import ScrollLoader from "@src/components/ScrollLoader/ScrollLoader";
 import StoryCard from "@src/components/StoryCard/StoryCard";
-import useStoriesList from "@src/queries/useStories";
+import useStoriesList from "@src/hooks/queries/useStories";
+import StoriesListSkeleton from "@src/pages/Stories/Skeleton";
 
 import S from "./StoriesPage.styles";
 
@@ -23,34 +26,38 @@ const StoriesPage = () => {
     storyIdsIsFetching
   } = useStoriesList();
 
-  if (isLoading || storyIdsIsFetching)
-    return <Typography>Loading...</Typography>;
-
   return (
     <Box>
       <S.Title>
         <Typography variant="h4">News</Typography>
-        <IconButton onClick={() => refetchStoryIds()}>
-          {storyIdsIsFetching ? (
-            <CircularProgress size={24} />
-          ) : (
-            <RefreshIcon />
-          )}
-        </IconButton>
+        <RefreshButton
+          isFetching={storyIdsIsFetching}
+          clickHandler={refetchStoryIds}
+        />
       </S.Title>
-      {stories?.pages.map((page, i) => (
-        <Fragment key={i}>
-          {page.map(story => (
-            <Link key={story.id} to={`/${story.id}`} underline="none">
-              <StoryCard story={story} />
-            </Link>
+      {isLoading || storyIdsIsFetching ? (
+        <StoriesListSkeleton />
+      ) : (
+        <>
+          {stories?.pages.map((page, i) => (
+            <Fragment key={i}>
+              {page.map(story => (
+                <Link key={story.id} to={`/${story.id}`} underline="none">
+                  <StoryCard story={story} />
+                </Link>
+              ))}
+            </Fragment>
           ))}
-        </Fragment>
-      ))}
-      {hasNextPage && (
-        <S.Loader ref={observerRef}>
-          {isFetchingNextPage && <CircularProgress />}
-        </S.Loader>
+          {hasNextPage && (
+            // <S.Loader ref={observerRef}>
+            //   {isFetchingNextPage && <CircularProgress />}
+            // </S.Loader>
+            <ScrollLoader
+              isFetchingNextPage={isFetchingNextPage}
+              ref={observerRef as any}
+            />
+          )}
+        </>
       )}
     </Box>
   );

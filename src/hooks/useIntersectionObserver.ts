@@ -4,7 +4,7 @@ const useIntersectionObserver = (
   fetchNextPage: () => void,
   hasNextPage: boolean | undefined
 ) => {
-  const observerRef = useRef();
+  const observerRef = useRef<HTMLDivElement>();
   useEffect(() => {
     const element = observerRef.current;
     if (!element || !hasNextPage) return;

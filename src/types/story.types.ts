@@ -6,5 +6,7 @@ export type TStory = {
   by: string;
   score: number;
   time: number;
+  descendants: number;
+  url: string;
   kids?: number[];
 };
