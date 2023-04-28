@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -5,6 +6,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarsIcon from "@mui/icons-material/Stars";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Typography from "@mui/material/Typography";
 
 import Comment from "@src/components/Comment/Comment";
@@ -14,6 +17,7 @@ import LoadingWrap from "@src/components/LoadingWrap/LoadingWrap";
 import RefreshButton from "@src/components/RefreshButton/RefreshButton";
 import ScrollLoader from "@src/components/ScrollLoader/ScrollLoader";
 import useStoryData from "@src/hooks/queries/useStoryData";
+import useStorage from "@src/hooks/useStorage";
 import StoryCardSkeleton from "@src/pages/Story/Skeleton";
 import { formatUnixDateWithTime } from "@src/utils/functions/format/date";
 
@@ -21,6 +25,10 @@ import S from "./StoryPage.styles";
 
 const StoryPage = () => {
   const { newsId } = useParams();
+  const [loadOnlyChilds, setLoadOnlyChilds] = useStorage<string>(
+    "loadOnlyChilds",
+    ""
+  );
 
   const { story, comments, observerRef } = useStoryData(Number(newsId));
 
@@ -74,6 +82,25 @@ const StoryPage = () => {
                   <Typography variant="h5">
                     Comments ({story.data.descendants})
                   </Typography>
+                  <FormControlLabel
+                    control={
+                      <Checkbox
+                        defaultChecked
+                        size="small"
+                        checked={!!loadOnlyChilds}
+                        onChange={({ target }) => {
+                          comments.refetch();
+                          setLoadOnlyChilds(target.checked ? "1" : "");
+                        }}
+                        disabled={comments.isFetching}
+                      />
+                    }
+                    label="Load only childs"
+                  />
+                  {/* <LabelWithIcon
+                text="Load only childs"
+                icon={<AccessTimeFilledIcon color="disabled" />}
+              /> */}
                   {comments.data && (
                     <RefreshButton
                       isFetching={comments.isFetching}
@@ -86,7 +113,11 @@ const StoryPage = () => {
                   <Box>
                     {comments.data.pages.map(page =>
                       page.map(comment => (
-                        <Comment key={comment.id} comment={comment} />
+                        <Comment
+                          key={comment.id}
+                          comment={comment}
+                          onlyChilds={!!loadOnlyChilds}
+                        />
                       ))
                     )}
                   </Box>

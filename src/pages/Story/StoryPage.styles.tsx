@@ -58,9 +58,16 @@ const CommentsTitle = styled(Box)<BoxProps>(
     gap: ${theme.spacing(2)};
     margin-bottom: ${theme.spacing(2)};
 
-    .MuiTypography-root {
+    .MuiTypography-root:first-of-type {
       font-weight: bold;
+      flex-grow: 1;
     }
+
+    /* & > *:nth-of-type(2) {
+      flex-grow: 1;
+      width: 100%;
+      text-align: right;
+    } */
   `
 );
 

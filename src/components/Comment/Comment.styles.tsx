@@ -1,11 +1,4 @@
-import {
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-  Box,
-  BoxProps
-} from "@mui/material";
+import { Typography, TypographyProps, Box, BoxProps } from "@mui/material";
 import { css, styled } from "@mui/system";
 
 const Body = styled(Box)<BoxProps>(

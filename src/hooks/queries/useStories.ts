@@ -45,13 +45,6 @@ const useStoriesList = () => {
     storyIds,
     stories,
     observerRef
-    // error: idsError || error,
-    // isLoading: idsIsLoading || storiesIsLoading,
-    // isFetchingNextPage,
-    // hasNextPage,
-    // observerRef,
-    // refetchStoryIds,
-    // storyIdsIsFetching
   };
 };
 
