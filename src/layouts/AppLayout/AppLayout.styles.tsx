@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
 import MuiContainer, { ContainerProps } from "@mui/material/Container";
 import { css, styled } from "@mui/material/styles";
 

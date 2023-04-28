@@ -1,16 +1,5 @@
-import {
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-  Box,
-  BoxProps,
-  Skeleton,
-  SkeletonProps
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
 import { css, styled } from "@mui/system";
-
-import Link, { TLinkProps } from "@src/components/Link/Link";
 
 const Title = styled(Box)<BoxProps>(
   ({ theme }) => css`

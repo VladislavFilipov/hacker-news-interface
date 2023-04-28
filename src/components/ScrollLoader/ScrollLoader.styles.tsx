@@ -1,4 +1,4 @@
-import { Box, BoxProps } from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
 import { css, styled } from "@mui/system";
 
 const Loader = styled(Box)<BoxProps>(

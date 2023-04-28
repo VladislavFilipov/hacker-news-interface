@@ -1,17 +1,7 @@
-import emStyled from "@emotion/styled";
-import {
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-  Box,
-  BoxProps,
-  Skeleton as MuiSkeleton,
-  SkeletonProps
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import Paper, { PaperProps } from "@mui/material/Paper";
+import MuiSkeleton, { SkeletonProps } from "@mui/material/Skeleton";
 import { css, styled } from "@mui/system";
-
-import Link, { TLinkProps } from "@src/components/Link/Link";
 
 const Title = styled(Box)<BoxProps>(
   ({ theme }) => css`
@@ -63,12 +53,6 @@ const CommentsTitle = styled(Box)<BoxProps>(
       font-weight: bold;
       flex-grow: 1;
     }
-
-    /* & > *:nth-of-type(2) {
-      flex-grow: 1;
-      width: 100%;
-      text-align: right;
-    } */
   `
 );
 

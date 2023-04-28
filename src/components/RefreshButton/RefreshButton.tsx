@@ -1,8 +1,8 @@
 import { FC } from "react";
 
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { IconButton } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
+import IconButton from "@mui/material/IconButton";
 
 type TProps = {
   isFetching: boolean;

@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 
-import { Typography } from "@mui/material";
+import Typography from "@mui/material/Typography";
 
 import S from "./LabelWithIcon.styles";
 

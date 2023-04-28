@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 import { Outlet } from "react-router-dom";
 
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import ErrorFallback from "@src/components/ErrorFallback/ErrorFallback";

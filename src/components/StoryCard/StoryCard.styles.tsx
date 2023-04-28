@@ -1,13 +1,7 @@
-import {
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-  Box,
-  BoxProps,
-  Skeleton as MuiSkeleton,
-  SkeletonProps
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import Paper, { PaperProps } from "@mui/material/Paper";
+import MuiSkeleton, { SkeletonProps } from "@mui/material/Skeleton";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 import { styled, css } from "@mui/system";
 
 const Wrap = styled(Paper)<PaperProps>(
@@ -36,21 +30,12 @@ const Info = styled(Box)<BoxProps>(
     justify-content: space-between;
     flex-wrap: wrap;
     gap: ${theme.spacing(3)};
-
-    /* @media screen and (max-width: 600px) {
-      & > .MuiBox-root:nth-child(2) {
-        display: block;
-      }
-    } */
   `
 );
 
 const InfoNested = styled(Info)<BoxProps>(
-  ({ theme }) => css`
+  () => css`
     @media screen and (max-width: 600px) {
-      /* & > .MuiBox-root:nth-child(2) {
-        display: block;
-      } */
       justify-content: flex-start;
     }
   `

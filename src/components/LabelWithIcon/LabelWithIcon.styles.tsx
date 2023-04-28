@@ -1,11 +1,4 @@
-import {
-  Paper,
-  PaperProps,
-  Typography,
-  TypographyProps,
-  Box,
-  BoxProps
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
 import { styled, css } from "@mui/system";
 
 const Wrap = styled(Box)<BoxProps>(

@@ -8,13 +8,13 @@ import LoadingWrap from "@src/components/LoadingWrap/LoadingWrap";
 import RefreshButton from "@src/components/RefreshButton/RefreshButton";
 import ScrollLoader from "@src/components/ScrollLoader/ScrollLoader";
 import StoryCard from "@src/components/StoryCard/StoryCard";
-import useStoriesList from "@src/hooks/queries/useStories";
 import StoriesListSkeleton from "@src/pages/Stories/Skeleton";
+import useStories from "@src/pages/Stories/queries/useStories";
 
 import S from "./StoriesPage.styles";
 
 const StoriesPage = () => {
-  const { storyIds, stories, observerRef } = useStoriesList();
+  const { storyIds, stories, observerRef } = useStories();
 
   return (
     <Box>

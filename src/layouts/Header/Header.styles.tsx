@@ -1,4 +1,3 @@
-import MuiAppBar, { AppBarProps } from "@mui/material/AppBar";
 import { styled, css } from "@mui/material/styles";
 
 import Link, { TLinkProps } from "@src/components/Link/Link";

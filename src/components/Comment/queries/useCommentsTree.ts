@@ -1,4 +1,4 @@
-import { useQuery, ResultOptions } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 import storiesApi from "@src/api";
 import { TComment } from "@src/types/comment.types";

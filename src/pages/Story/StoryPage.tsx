@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -16,9 +15,9 @@ import Link from "@src/components/Link/Link";
 import LoadingWrap from "@src/components/LoadingWrap/LoadingWrap";
 import RefreshButton from "@src/components/RefreshButton/RefreshButton";
 import ScrollLoader from "@src/components/ScrollLoader/ScrollLoader";
-import useStoryData from "@src/hooks/queries/useStoryData";
 import useStorage from "@src/hooks/useStorage";
 import StoryCardSkeleton from "@src/pages/Story/Skeleton";
+import useStoryData from "@src/pages/Story/queries/useStoryData";
 import { formatUnixDateWithTime } from "@src/utils/functions/format/date";
 
 import S from "./StoryPage.styles";
