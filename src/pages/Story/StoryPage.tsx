@@ -72,41 +72,40 @@ const StoryPage = () => {
             )}
 
             <S.Comments>
+              <S.CommentsTitle>
+                <Typography variant="h5">
+                  Comments ({story.data.descendants})
+                </Typography>
+
+                {comments.data && (
+                  <>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          defaultChecked
+                          size="small"
+                          checked={!!loadOnlyChilds}
+                          onChange={({ target }) => {
+                            setLoadOnlyChilds(target.checked ? "1" : "");
+                            comments.refetch();
+                          }}
+                          disabled={comments.isFetching}
+                        />
+                      }
+                      label="Load only childs"
+                    />
+                    <RefreshButton
+                      isFetching={comments.isFetching}
+                      clickHandler={comments.refetch}
+                    />
+                  </>
+                )}
+              </S.CommentsTitle>
               <LoadingWrap
-                isLoading={comments.isFetching}
+                isLoading={comments.isRefetching}
                 error={comments.isError && new Error("Failed to load comments")}
                 repeatHandler={comments.refetch}
               >
-                <S.CommentsTitle>
-                  <Typography variant="h5">
-                    Comments ({story.data.descendants})
-                  </Typography>
-
-                  {comments.data && (
-                    <>
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            defaultChecked
-                            size="small"
-                            checked={!!loadOnlyChilds}
-                            onChange={({ target }) => {
-                              comments.refetch();
-                              setLoadOnlyChilds(target.checked ? "1" : "");
-                            }}
-                            disabled={comments.isFetching}
-                          />
-                        }
-                        label="Load only childs"
-                      />
-                      <RefreshButton
-                        isFetching={comments.isFetching}
-                        clickHandler={comments.refetch}
-                      />
-                    </>
-                  )}
-                </S.CommentsTitle>
-
                 {comments.data ? (
                   <Box>
                     {comments.data.pages.map(page =>
