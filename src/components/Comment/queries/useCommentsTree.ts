@@ -5,7 +5,7 @@ import { TComment } from "@src/types/comment.types";
 
 const useCommentsTree = (comment: TComment) => {
   const result = useQuery({
-    queryKey: ["nestedComments", comment.id],
+    queryKey: ["commentsTree", comment.id],
     queryFn: async () => await addNestedComments(comment),
     enabled: false
   });
