@@ -7,7 +7,7 @@
 
 ## Установка
 
-Требуется установленная среда [Node.JS](https://nodejs.org/en/download) и сборщик [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable). 
+Требуется установленная среда [Node.JS](https://nodejs.org/en/download) (версии 14 и выше)  и сборщик [Yarn](https://classic.yarnpkg.com/lang/en/docs/install/#windows-stable). 
 
 В корне проекта для установки зависимостей:
 > yarn
