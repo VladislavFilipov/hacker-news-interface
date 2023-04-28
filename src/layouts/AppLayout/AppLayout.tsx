@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Box, Container } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import Navbar from "@src/layouts/Navbar/Navbar";
+import Navbar from "@src/layouts/Header/Header";
 
 import S from "./AppLayout.styles";
 

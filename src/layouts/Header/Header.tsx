@@ -3,16 +3,20 @@ import Toolbar from "@mui/material/Toolbar";
 
 import Link from "@src/components/Link/Link";
 
+import S from "./Header.styles";
+
 const Navbar = () => {
   return (
-    <>
+    <header>
       <AppBar position="fixed">
         <Toolbar variant="dense">
-          <Link to="/">News</Link>
+          <S.Logo to="/">
+            <img src="/logo.png" alt="HACKER NEWS INTERFACE" />
+          </S.Logo>
         </Toolbar>
       </AppBar>
       <Toolbar variant="dense" />
-    </>
+    </header>
   );
 };
 
