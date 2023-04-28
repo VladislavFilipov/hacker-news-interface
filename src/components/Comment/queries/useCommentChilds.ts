@@ -5,7 +5,7 @@ import { TComment } from "@src/types/comment.types";
 
 const useCommentChilds = (comment: TComment) => {
   const result = useQuery({
-    queryKey: ["childComments", comment.id],
+    queryKey: ["commentChilds", comment.id],
     queryFn: async () => await addChildComments(comment),
     enabled: false
   });

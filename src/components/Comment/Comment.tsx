@@ -16,14 +16,13 @@ const Comment: FC<{ comment: TComment; onlyChilds?: boolean }> = ({
   comment,
   onlyChilds = false
 }) => {
+  console.log("onlyChilds", onlyChilds);
+
   const nested = onlyChilds
     ? useCommentChilds(comment)
     : useCommentsTree(comment);
 
   const [showChilds, setShowChilds] = useState<boolean>(!!comment.childs);
-  useEffect(() => {
-    setShowChilds(false);
-  }, [onlyChilds]);
 
   return (
     <S.Body>

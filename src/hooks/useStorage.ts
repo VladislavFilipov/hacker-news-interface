@@ -9,8 +9,8 @@ const useStorage = <T extends string>(
   );
 
   const updateValue = (newValue: T) => {
-    localStorage.setItem(key, newValue);
     setValue(newValue);
+    localStorage.setItem(key, newValue);
   };
 
   return [value, updateValue];
