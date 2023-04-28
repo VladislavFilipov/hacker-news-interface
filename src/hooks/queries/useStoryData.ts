@@ -7,57 +7,39 @@ import { TStory } from "@src/types/story.types";
 
 const LIMIT = 10;
 const useStoryData = (storyId: number) => {
-  const {
-    data: story,
-    error: storyError,
-    isLoading
-  } = useQuery({
+  const story = useQuery({
     queryKey: ["story", storyId],
     queryFn: async () => await Api.getItemById<TStory>(storyId)
   });
 
   const getNextComments = async (pageParam: number) => {
-    if (!story?.kids) throw new Error("Error");
+    if (!story.data?.kids) throw new Error("Error");
 
     const to = pageParam * LIMIT;
-    const curKidsIdsList = story?.kids.slice(to - LIMIT, to);
+    const curKidsIdsList = story.data?.kids.slice(to - LIMIT, to);
 
     return await Promise.all(
       curKidsIdsList.map(id => Api.getItemById<TComment>(id))
     );
   };
 
-  const {
-    data: comments,
-    error: commentsError,
-    isFetching: commentsIsFetching,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-    refetch: refetchComments
-  } = useInfiniteQuery({
+  const comments = useInfiniteQuery({
     queryKey: ["comments", storyId],
     queryFn: async ({ pageParam = 1 }) => await getNextComments(pageParam),
-    enabled: !!(story && story.kids && story.kids.length > 0),
+    enabled: !!(story.data && story.data.kids && story.data.kids.length > 0),
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length === LIMIT ? allPages.length + 1 : undefined
   });
 
   const observerRef = useIntersectionObserver(
-    () => fetchNextPage(),
-    hasNextPage
+    () => comments.fetchNextPage(),
+    comments.hasNextPage
   );
 
   return {
     story,
     comments,
-    refetchComments,
-    error: storyError || commentsError,
-    commentsIsFetching,
-    isLoading,
-    isFetchingNextPage,
-    observerRef,
-    hasNextPage
+    observerRef
   };
 };
 

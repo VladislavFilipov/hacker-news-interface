@@ -4,7 +4,6 @@ import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ChatIcon from "@mui/icons-material/Chat";
 import StarsIcon from "@mui/icons-material/Stars";
-import { Typography } from "@mui/material";
 
 import LabelWithIcon from "@src/components/LabelWithIcon/LabelWithIcon";
 import { TStory } from "@src/types/story.types";
@@ -16,6 +15,7 @@ const StoryCard: FC<{ story: TStory }> = ({ story }) => {
   return (
     <S.Wrap variant="elevation" elevation={5}>
       <S.Title variant="h6">{story.title}</S.Title>
+
       <S.Info>
         <LabelWithIcon
           text={story.by}

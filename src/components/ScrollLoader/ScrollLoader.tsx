@@ -1,18 +1,13 @@
-import { FC, forwardRef, HTMLAttributes } from "react";
+import { FC } from "react";
 
-import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import Loader from "./ScrollLoader.styles";
+import S from "./ScrollLoader.styles";
 
-const ScrollLoader = forwardRef<
-  HTMLDivElement,
-  { isFetchingNextPage: boolean } & HTMLAttributes<HTMLDivElement>
->(({ isFetchingNextPage }, ref) => {
-  return (
-    <Loader ref={ref}>{isFetchingNextPage && <CircularProgress />}</Loader>
-  );
-});
-ScrollLoader.displayName = "ScrollLoader";
+const ScrollLoader: FC<{ isFetchingNextPage: boolean }> = ({
+  isFetchingNextPage
+}) => {
+  return <S.Loader>{isFetchingNextPage && <CircularProgress />}</S.Loader>;
+};
 
 export default ScrollLoader;

@@ -9,15 +9,6 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
   palette: {
     mode,
     primary: deepOrange
-    // ...(mode === "light"
-    //   ? {
-    //       // palette values for light mode
-    //       primary: amber,
-    //     }
-    //   : {
-    //       // palette values for dark mode
-    //       primary: deepOrange,
-    //     }),
   },
   typography: {
     button: {

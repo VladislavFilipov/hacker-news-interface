@@ -1,8 +1,6 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 
-import Link from "@src/components/Link/Link";
-
 import S from "./Header.styles";
 
 const Navbar = () => {

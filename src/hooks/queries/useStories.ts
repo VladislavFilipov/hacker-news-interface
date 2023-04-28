@@ -6,65 +6,52 @@ import { TStory } from "@src/types/story.types";
 
 const LIMIT = 10;
 const useStoriesList = () => {
-  const {
-    data: storyIds,
-    error: idsError,
-    isLoading: idsIsLoading,
-    isFetching: storyIdsIsFetching,
-    refetch: refetchStoryIds
-  } = useQuery({
+  const storyIds = useQuery({
     queryKey: ["storyIds"],
     queryFn: async () => await Api.getNewStoryIds(100),
     refetchInterval: 60000,
     refetchOnMount: false,
     onSuccess: () => {
-      if (stories) refetchStories();
+      if (stories.data) stories.refetch();
     }
   });
 
   const getNextStories = async (pageParam: number) => {
-    if (!storyIds) throw new Error("Error");
+    if (!storyIds.data) throw new Error("Error");
 
     const to = pageParam * LIMIT;
-    const curStoryIds = storyIds.slice(to - LIMIT, to);
+    const curStoryIds = storyIds.data.slice(to - LIMIT, to);
 
     return await Promise.all(
       curStoryIds.map(storyId => Api.getItemById<TStory>(storyId))
     );
   };
 
-  const {
-    data: stories,
-    error,
-    isLoading: storiesIsLoading,
-    isFetchingNextPage,
-    fetchNextPage,
-    hasNextPage,
-    refetch: refetchStories
-  } = useInfiniteQuery({
-    queryKey: ["stories", storyIds],
+  const stories = useInfiniteQuery({
+    queryKey: ["stories", storyIds.data],
     queryFn: async ({ pageParam = 1 }) => await getNextStories(pageParam),
-    enabled: !!storyIds,
+    enabled: !!storyIds.data,
     getNextPageParam: (lastPage, allPages) =>
       lastPage.length === LIMIT ? allPages.length + 1 : undefined,
     refetchOnMount: false
   });
 
   const observerRef = useIntersectionObserver(
-    () => fetchNextPage(),
-    hasNextPage
+    () => stories.fetchNextPage(),
+    stories.hasNextPage
   );
 
   return {
     storyIds,
     stories,
-    error: idsError || error,
-    isLoading: idsIsLoading || storiesIsLoading,
-    isFetchingNextPage,
-    hasNextPage,
-    observerRef,
-    refetchStoryIds,
-    storyIdsIsFetching
+    observerRef
+    // error: idsError || error,
+    // isLoading: idsIsLoading || storiesIsLoading,
+    // isFetchingNextPage,
+    // hasNextPage,
+    // observerRef,
+    // refetchStoryIds,
+    // storyIdsIsFetching
   };
 };
 

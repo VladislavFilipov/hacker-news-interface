@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import StarsIcon from "@mui/icons-material/Stars";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 
 import Comment from "@src/components/Comment/Comment";
 import LabelWithIcon from "@src/components/LabelWithIcon/LabelWithIcon";
 import Link from "@src/components/Link/Link";
+import LoadingWrap from "@src/components/LoadingWrap/LoadingWrap";
 import RefreshButton from "@src/components/RefreshButton/RefreshButton";
 import ScrollLoader from "@src/components/ScrollLoader/ScrollLoader";
 import useStoryData from "@src/hooks/queries/useStoryData";
@@ -22,87 +22,89 @@ import S from "./StoryPage.styles";
 const StoryPage = () => {
   const { newsId } = useParams();
 
-  const {
-    story,
-    comments,
-    refetchComments,
-    error,
-    isLoading,
-    isFetchingNextPage,
-    observerRef,
-    hasNextPage,
-    commentsIsFetching
-  } = useStoryData(Number(newsId));
-
-  if (error) return <Typography>ERROR</Typography>;
+  const { story, comments, observerRef } = useStoryData(Number(newsId));
 
   return (
     <Box>
-      {isLoading ? (
-        <StoryCardSkeleton />
-      ) : (
-        story && (
+      <LoadingWrap
+        isLoading={story.isLoading}
+        error={story.isError && new Error("Failed to load news item")}
+        skeleton={<StoryCardSkeleton />}
+        repeatHandler={story.refetch}
+      >
+        {story.data && (
           <>
             <S.Title>
-              <Typography variant="h4">{story.title}</Typography>
               <Link to="/">
                 <Button>Back to News</Button>
               </Link>
+              <Typography variant="h4">{story.data.title}</Typography>
             </S.Title>
 
             <S.Info>
               <LabelWithIcon
-                text={story.by}
+                text={story.data.by}
                 icon={<AccountCircleIcon color="primary" />}
               />
               <LabelWithIcon
-                text={story.score}
+                text={story.data.score}
                 icon={<StarsIcon color="warning" />}
               />
               <LabelWithIcon
-                text={formatUnixDateWithTime(story.time * 1000)}
+                text={formatUnixDateWithTime(story.data.time * 1000)}
                 icon={<AccessTimeFilledIcon color="disabled" />}
               />
             </S.Info>
 
-            <Link to={story.url} target="_blank">
-              <S.Url variant="outlined">
-                <Typography>{story.url}</Typography>
-              </S.Url>
-            </Link>
-            {/* <Button onClick={() => refetchComments()}>refetchComments</Button> */}
+            {story.data.url && (
+              <Link to={story.data.url} target="_blank">
+                <S.Url variant="outlined">
+                  <Typography>{story.data.url}</Typography>
+                </S.Url>
+              </Link>
+            )}
 
-            <S.Title>
-              <Typography variant="h5">
-                Comments ({story.descendants})
-              </Typography>
-              {comments && (
-                <RefreshButton
-                  isFetching={commentsIsFetching}
-                  clickHandler={refetchComments}
-                />
-              )}
-            </S.Title>
-            {comments ? (
-              <Box>
-                {comments.pages.map(page =>
-                  page.map(comment => (
-                    <Comment key={comment.id} comment={comment} />
-                  ))
+            <S.Comments>
+              <LoadingWrap
+                isLoading={comments.isLoading}
+                error={comments.isError && new Error("Failed to load comments")}
+                repeatHandler={comments.refetch}
+              >
+                <S.CommentsTitle>
+                  <Typography variant="h5">
+                    Comments ({story.data.descendants})
+                  </Typography>
+                  {comments.data && (
+                    <RefreshButton
+                      isFetching={comments.isFetching}
+                      clickHandler={comments.refetch}
+                    />
+                  )}
+                </S.CommentsTitle>
+
+                {comments.data ? (
+                  <Box>
+                    {comments.data.pages.map(page =>
+                      page.map(comment => (
+                        <Comment key={comment.id} comment={comment} />
+                      ))
+                    )}
+                  </Box>
+                ) : (
+                  <Typography variant="body2">No Comments</Typography>
                 )}
-              </Box>
-            ) : (
-              <Typography variant="body2">No Comments</Typography>
-            )}
-            {hasNextPage && (
-              <ScrollLoader
-                isFetchingNextPage={isFetchingNextPage}
-                ref={observerRef as any}
-              />
-            )}
+                {comments.hasNextPage && (
+                  <Box ref={observerRef}>
+                    <ScrollLoader
+                      isFetchingNextPage={comments.isFetchingNextPage}
+                    />
+                  </Box>
+                )}
+              </LoadingWrap>
+            </S.Comments>
           </>
-        )
-      )}
+        )}
+      </LoadingWrap>
     </Box>
   );
 };

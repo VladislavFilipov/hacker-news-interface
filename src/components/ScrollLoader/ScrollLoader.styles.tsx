@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@mui/material";
 import { css, styled } from "@mui/system";
 
-const ScrollLoader = styled(Box)<BoxProps>(
+const Loader = styled(Box)<BoxProps>(
   ({ theme }) => css`
     display: flex;
     align-items: center;
@@ -10,4 +10,4 @@ const ScrollLoader = styled(Box)<BoxProps>(
   `
 );
 
-export default ScrollLoader;
+export default { Loader };

@@ -1,3 +1,4 @@
+import emStyled from "@emotion/styled";
 import {
   Paper,
   PaperProps,
@@ -15,22 +16,13 @@ import Link, { TLinkProps } from "@src/components/Link/Link";
 const Title = styled(Box)<BoxProps>(
   ({ theme }) => css`
     display: flex;
-    flex-wrap: wrap-reverse;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
     gap: ${theme.spacing(2)};
     margin-bottom: ${theme.spacing(2)};
 
     .MuiTypography-root {
       font-weight: bold;
     }
-  `
-);
-
-const Url = styled(Paper)<PaperProps>(
-  ({ theme }) => css`
-    padding: ${theme.spacing(1)};
-    margin-bottom: ${theme.spacing(6)};
   `
 );
 
@@ -42,6 +34,33 @@ const Info = styled(Box)<BoxProps>(
     justify-content: flex-start;
     gap: ${theme.spacing(2)};
     margin-bottom: ${theme.spacing(2)};
+  `
+);
+
+const Url = styled(Paper)<PaperProps>(
+  ({ theme }) => css`
+    padding: ${theme.spacing(1)};
+  `
+);
+
+const Comments = styled(Box)<BoxProps>(
+  ({ theme }) => css`
+    margin-top: ${theme.spacing(6)};
+  `
+);
+
+const CommentsTitle = styled(Box)<BoxProps>(
+  ({ theme }) => css`
+    display: flex;
+    flex-wrap: wrap-reverse;
+    align-items: center;
+    justify-content: space-between;
+    gap: ${theme.spacing(2)};
+    margin-bottom: ${theme.spacing(2)};
+
+    .MuiTypography-root {
+      font-weight: bold;
+    }
   `
 );
 
@@ -80,4 +99,4 @@ const Skeleton = {
   )
 };
 
-export default { Title, Url, Info, Skeleton };
+export default { Title, Url, Info, Comments, CommentsTitle, Skeleton };
