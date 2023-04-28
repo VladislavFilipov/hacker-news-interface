@@ -9,4 +9,5 @@ export type TStory = {
   descendants: number;
   url: string;
   kids?: number[];
+  childs?: TComment[];
 };

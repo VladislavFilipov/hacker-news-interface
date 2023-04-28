@@ -1,5 +1,5 @@
 import GlobalStyles from "@mui/material/GlobalStyles";
-import { css, styled } from "@mui/system";
+import { css } from "@mui/system";
 
 export default (
   <GlobalStyles
