@@ -1,19 +1,29 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import useNestedComments from "@src/hooks/queries/useNestedComments";
+import useCommentChilds from "@src/components/Comment/queries/useCommentChilds";
+import useCommentsTree from "@src/components/Comment/queries/useCommentsTree";
+import LoadingWrap from "@src/components/LoadingWrap/LoadingWrap";
 import { TComment } from "@src/types/comment.types";
 import { formatUnixDateWithTime } from "@src/utils/functions/format/date";
 
 import S from "./Comment.styles";
 
-const Comment: FC<{ comment: TComment }> = ({ comment }) => {
-  const { error, isFetching, enableLoad } = useNestedComments(comment);
+const Comment: FC<{ comment: TComment; onlyChilds?: boolean }> = ({
+  comment,
+  onlyChilds = false
+}) => {
+  const nested = onlyChilds
+    ? useCommentChilds(comment)
+    : useCommentsTree(comment);
 
-  const [showNested, setShowNested] = useState<boolean>(!!comment.childs);
+  const [showChilds, setShowChilds] = useState<boolean>(!!comment.childs);
+  useEffect(() => {
+    setShowChilds(false);
+  }, [onlyChilds]);
 
   return (
     <S.Body>
@@ -25,28 +35,34 @@ const Comment: FC<{ comment: TComment }> = ({ comment }) => {
       </S.Header>
 
       <Typography dangerouslySetInnerHTML={{ __html: comment.text }} />
-      {/* {comment.text}
-      </Typography> */}
       {comment.kids && (
         <>
-          {isFetching ? (
-            <Typography>Loading...</Typography>
-          ) : (
+          <LoadingWrap
+            isLoading={nested.isFetching}
+            error={nested.error}
+            repeatHandler={() => {
+              if (!comment.childs) nested.refetch();
+              setShowChilds(prev => !prev);
+            }}
+          >
             <Button
               onClick={() => {
-                if (!comment.childs) enableLoad();
-                setShowNested(prev => !prev);
+                if (!comment.childs) nested.refetch();
+                setShowChilds(prev => !prev);
               }}
             >
-              {showNested ? "Hide" : `Show ${comment.kids.length}`} answers
+              {showChilds ? "Hide" : "Show"} {comment.kids.length} answers
             </Button>
-          )}
-          {error && <Typography>error...</Typography>}
+          </LoadingWrap>
 
-          {showNested && comment?.childs && (
+          {showChilds && comment?.childs && (
             <Box sx={{ marginLeft: 3 }}>
               {comment.childs.map(nestedComment => (
-                <Comment key={nestedComment.id} comment={nestedComment} />
+                <Comment
+                  key={nestedComment.id}
+                  comment={nestedComment}
+                  onlyChilds={onlyChilds}
+                />
               ))}
             </Box>
           )}
@@ -55,9 +71,5 @@ const Comment: FC<{ comment: TComment }> = ({ comment }) => {
     </S.Body>
   );
 };
-
-// const Answer = () => {
-
-// }
 
 export default Comment;

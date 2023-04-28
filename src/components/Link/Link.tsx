@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { LinkProps, Link as MuiLink } from "@mui/material";
+import MuiLink, { LinkProps } from "@mui/material/Link";
 
 export type TLinkProps = LinkProps & { to: string };
 const Link: FC<TLinkProps> = ({ to, children, ...props }) => {
