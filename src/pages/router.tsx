@@ -1,6 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
+import ErrorFallback from "@src/components/ErrorFallback/ErrorFallback";
 import AppLayout from "@src/layouts/AppLayout/AppLayout";
 
 const StoriesPage = lazy(() => import("@src/pages/Stories/StoriesPage"));
@@ -11,7 +12,7 @@ export const routes = [
   {
     path: "/",
     element: <AppLayout />,
-    errorElement: <></>,
+    errorElement: <ErrorFallback />,
     children: [
       {
         path: "/",

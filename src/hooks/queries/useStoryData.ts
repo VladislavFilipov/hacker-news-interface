@@ -9,7 +9,11 @@ const LIMIT = 10;
 const useStoryData = (storyId: number) => {
   const story = useQuery({
     queryKey: ["story", storyId],
-    queryFn: async () => await Api.getItemById<TStory>(storyId)
+    queryFn: async () => {
+      const result = await Api.getItemById<TStory>(storyId);
+      if (!result) throw new Error();
+      return result;
+    }
   });
 
   const getNextComments = async (pageParam: number) => {

@@ -40,6 +40,7 @@ const Info = styled(Box)<BoxProps>(
 const Url = styled(Paper)<PaperProps>(
   ({ theme }) => css`
     padding: ${theme.spacing(1)};
+    word-break: break-all;
   `
 );
 
@@ -52,7 +53,7 @@ const Comments = styled(Box)<BoxProps>(
 const CommentsTitle = styled(Box)<BoxProps>(
   ({ theme }) => css`
     display: flex;
-    flex-wrap: wrap-reverse;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: ${theme.spacing(2)};

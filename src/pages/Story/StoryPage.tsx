@@ -74,7 +74,7 @@ const StoryPage = () => {
 
             <S.Comments>
               <LoadingWrap
-                isLoading={comments.isLoading}
+                isLoading={comments.isFetching}
                 error={comments.isError && new Error("Failed to load comments")}
                 repeatHandler={comments.refetch}
               >
@@ -82,30 +82,29 @@ const StoryPage = () => {
                   <Typography variant="h5">
                     Comments ({story.data.descendants})
                   </Typography>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        defaultChecked
-                        size="small"
-                        checked={!!loadOnlyChilds}
-                        onChange={({ target }) => {
-                          comments.refetch();
-                          setLoadOnlyChilds(target.checked ? "1" : "");
-                        }}
-                        disabled={comments.isFetching}
-                      />
-                    }
-                    label="Load only childs"
-                  />
-                  {/* <LabelWithIcon
-                text="Load only childs"
-                icon={<AccessTimeFilledIcon color="disabled" />}
-              /> */}
+
                   {comments.data && (
-                    <RefreshButton
-                      isFetching={comments.isFetching}
-                      clickHandler={comments.refetch}
-                    />
+                    <>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            defaultChecked
+                            size="small"
+                            checked={!!loadOnlyChilds}
+                            onChange={({ target }) => {
+                              comments.refetch();
+                              setLoadOnlyChilds(target.checked ? "1" : "");
+                            }}
+                            disabled={comments.isFetching}
+                          />
+                        }
+                        label="Load only childs"
+                      />
+                      <RefreshButton
+                        isFetching={comments.isFetching}
+                        clickHandler={comments.refetch}
+                      />
+                    </>
                   )}
                 </S.CommentsTitle>
 

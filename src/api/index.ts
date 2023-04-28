@@ -5,7 +5,7 @@ const Api = {
   getNewStoryIds: async (limit: number) =>
     request<number[]>({
       method: GET,
-      url: `/beststories.json?print=pretty`
+      url: `/newstories.json?print=pretty`
     }).then(res => res.slice(0, limit)),
   getItemById: async <Type>(id: number) =>
     request<Type>({

@@ -14,15 +14,6 @@ const getDesignTokens = (mode: PaletteMode): ThemeOptions => ({
     button: {
       textTransform: "none"
     }
-  },
-  components: {
-    MuiButton: {
-      styleOverrides: {
-        contained: {
-          color: "white"
-        }
-      }
-    }
   }
 });
 
